@@ -192,7 +192,6 @@ export const signIn = (email, password, callback) => {
 export const signOut = () => {
   // eslint-disable-next-line no-empty-pattern
   return (dispatch, {}) => {
-    window.location.href = "/"
     unauthorizeRequests()
     deleteProfile()
     dispatch(unauthorize())
