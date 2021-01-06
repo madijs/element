@@ -1,0 +1,122 @@
+.info{
+    min-width: 1200px;
+    min-height: 300px;
+    margin:30px 80px 0 80px;
+    background-color: white;
+    border-radius: 16px;
+    padding: 24px 40px 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 10px 10px 10px #E2E9F9;
+}
+
+.sort{
+    margin-right: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sort a{
+    margin: 0 30px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #C2CFE0;
+    cursor: pointer;
+}
+
+.text{
+    width: 450px;
+}
+
+.text h2{
+    color:#00AAF4
+}
+
+.text p{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+}
+
+.text span{
+    color:#0EAAF4;
+    font-size: 18px;
+}
+
+
+.giftsContainer{
+    display: flex;
+    margin:50px 80px 0 80px;
+}
+
+.gift{
+    margin:0 30px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 10px rgba(0, 71, 255, 0.1);
+    border-radius: 20px;
+    width: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding:0 16px;
+}
+.gift:nth-child(1){
+    margin: 0 30px 0 0;
+}
+
+.gift img{
+    align-self: center;
+    width: 270px;
+    height: 180px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.gift h3{
+    width: 230px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+    color: #00AAF4;
+    word-wrap: break-word;
+}
+
+.gift p{
+    max-width: 230px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 15px;
+    color: #2C3854;
+    word-wrap: break-word;
+}
+
+.gift span{
+    margin-top: 40px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #00AAF4;
+}
+
+.gift button{
+    align-self: center;
+    margin-top: 20px;
+    background: #00AAF4;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 10px 75px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 30px;
+}
+
+.gift button:active{
+    background: #005f80;
+}
