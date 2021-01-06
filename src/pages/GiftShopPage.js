@@ -21,6 +21,8 @@ const GiftShopPage = (props) => {
     getGifts()
     return () => {}
   }, [])
+
+  console.log(gifts)
   return (
     <>
       <div>

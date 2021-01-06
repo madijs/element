@@ -8,7 +8,7 @@ import $ from "jquery"
 import styles from "./styles/SmallChat.module.css"
 
 const SmallChat = (props) => {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   const [chatOpened, setChatOpened] = useState(false)
   const [dialog, setDialog] = useState({})
   const [text, setText] = useState("")
