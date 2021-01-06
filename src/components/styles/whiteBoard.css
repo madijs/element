@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+
+.whiteboard {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.colors {
+  position: fixed;
+}
+
+.color {
+  width: 24px;
+  height: 24px;
+  border: 0px solid red;
+  border-radius: 16px;
+  margin-top: 5;
+}
+
+.color.black {
+  background-color: black;
+}
+.color.red {
+  background-color: red;
+}
+.color.green {
+  background-color: green;
+}
+.color.blue {
+  background-color: blue;
+}
+.color.yellow {
+  background-color: yellow;
+}
+.color.hotpink {
+  background-color: hotpink;
+}

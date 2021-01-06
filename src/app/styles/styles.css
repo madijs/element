@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+  overflow: auto !important;
+}
+
+body * {
+  font-family: "Montserrat";
+}
+
+.pushable .sidebar.menu {
+  z-index: 99 !important;
+  padding-top: 49px !important;
+}
+
+.sidebar {
+  position: fixed !important;
+}
+
+.sidebar-dimmer {
+  opacity: 0 !important;
+}

@@ -1,0 +1,28 @@
+
+version: '3'
+
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: element-school-frontend
+    stdin_open: true
+    ports:
+    - "85:3000"
+    command: /start
+    networks:
+      masternet:
+        aliases:
+          - front
+
+
+networks:
+  masternet:
+    external: true
+#    image: httpd:latest
+#    labels:
+#      - "traefik.http.routers.apache.rule=Host(`apache.docker.localhost`)"
+#    networks:
+#      masternet

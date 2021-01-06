@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: "light-grey";
+  overflow: auto !important;
+}
+
+body * {
+  font-family: "Montserrat";
+}
+
+.pushable .sidebar.menu {
+  z-index: 99 !important;
+  /* padding-top: 49px !important; */
+}
+
+.ui.vertical.ui.push.left.visible.sidebar-css.menu {
+  z-index: 99 !important;
+}
+
+.sidebar {
+  position: fixed !important;
+}
+
+.sidebar-dimmer {
+  opacity: 0 !important;
+}
+
+#root {
+  height: 100%;
+}
+
+#root > div {
+  height: 100%;
+}
+
+.alerts-holder {
+  position: fixed;
+  right: 0;
+  z-index: 1060;
+  top: 47px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.alerts-holder .segment {
+  cursor: pointer;
+}
+
+.alert .icon {
+  margin-right: 10px;
+}
+
+.ui.button:hover {
+  opacity: 0.9;
+}

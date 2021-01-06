@@ -1,0 +1,40 @@
+version: 2
+
+#orbs:
+#  python: circleci/python@0.2.1
+#              ssh $SSH_USER@$SSH_HOST |
+
+jobs:
+  deploy:
+    machine:
+        enabled: true
+    steps:
+      - add_ssh_keys
+      - run:
+          echo $HOST_USER;
+          ssh $HOST_USER@$HOST_IP
+          "
+          cd ~/frontend/element-school/;
+          git checkout test;
+          git pull;
+          npm install;
+          npm run build;
+          cd ~/element-front-build;
+          rm -rf build;
+          mv ~/frontend/element-school/build ~/element-front-build/;
+          "
+
+workflows:
+   version: 2
+   deploy:
+     jobs:
+       - deploy:
+           context: .shweps.test # has an env var called MY_ENV_VAR
+           filters:
+             branches:
+               only: test
+
+#workflows:
+#  main:
+#    jobs:
+#      - deploy
