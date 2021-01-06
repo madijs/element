@@ -1,161 +1,120 @@
-import React, { useState, useEffect } from "react"
-import { useHistory } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { Input, Button } from "semantic-ui-react"
-import { purchasesApi, productsApi } from "../config/apiUrls"
+import React, { useEffect, useState } from "react"
+import { productsApi, purchasesApi } from "../config/apiUrls"
 import { apiGet, apiPost } from "../utils/apiConnector"
+import styles from "../components/styles/GiftShopPage.module.css"
+import info from "../assets/img/giftShopPageInfo.png"
 import { NotificationManager } from "react-notifications"
 
 const GiftShopPage = (props) => {
   const [gifts, setGifts] = useState([])
+  const [activeSort,setActiveSort] = useState("new")
   const getGifts = () => {
     apiGet(productsApi, {})
       .onStatus((res) => {
         setGifts(res.data.results)
       }, 200)
-      .onFail(() => {})
-      .afterAll(() => {})
+      .onFail(() => {
+      })
+      .afterAll(() => {
+      })
       .startSingle()
   }
   useEffect(() => {
     getGifts()
-    return () => {}
+    return () => {
+    }
   }, [])
+
+  const sort = (type) => {
+    switch (type) {
+      case "new": {
+        const copyState = [...gifts]
+        let newGifts = copyState.sort((a, b) => (new Date(a.created_at) > new Date(b.created_at)) ? 1 : ((new Date(b.created_at) > new Date(a.created_at)) ? -1 : 0))
+        setGifts(newGifts)
+        setActiveSort("new")
+        break
+      }
+      case "cheap": {
+        const copyState = [...gifts]
+        let newGifts = copyState.sort((a, b) => (a.bonus_price > b.bonus_price) ? 1 : ((b.bonus_price > a.bonus_price) ? -1 : 0))
+        setGifts(newGifts)
+        setActiveSort("cheap")
+        break
+      }
+      case "expensive": {
+        const copyState = [...gifts]
+        let newGifts = copyState.sort((a, b) => (a.bonus_price < b.bonus_price) ? 1 : ((b.bonus_price < a.bonus_price) ? -1 : 0))
+        setGifts(newGifts)
+        setActiveSort("expensive")
+        break
+      }
+      default:
+        setGifts(gifts)
+        break;
+    }
+  }
+
+
   return (
     <>
       <div>
-        <div style={{ marginLeft: 80, marginTop: 90 }}>
+        <div style={{ marginLeft: 80, marginTop: 90,display:"flex",justifyContent:"space-between"}}>
           <p style={{ color: "#005cff", fontSize: 24, fontWeight: 600 }}>
-            Подарки
+            Магазин Подарков
           </p>
-        </div>
-        <div style={{ marginRight: 80, marginLeft: 80 }}>
-          <div style={{ marginTop: 5 }}>
-            {gifts.map((q, i) => (
-              <>
-                <div
-                  style={{
-                    width: 224,
-                    height: 297,
-                    backgroundColor: "#ffffff",
-                    borderRadius: 8,
-                    boxShadow: "0px 4px 10px rgba(0, 71, 255, 0.1)",
-                    display: "inline-block",
-                    marginRight: 20,
-                    marginTop: 30,
-                  }}
-                >
-                  <div
-                    style={{
-                      height: 140,
-                      width: "100%",
-                      backgroundColor: "#c2cfe0",
-                      borderTopLeftRadius: 8,
-                      borderTopRightRadius: 8,
-                    }}
-                  >
-                    <img
-                      src={q.image}
-                      style={{
-                        height: 140,
-                        width: "100%",
-                        borderTopLeftRadius: 8,
-                        borderTopRightRadius: 8,
-                      }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      paddingLeft: 16,
-                      paddingRight: 16,
-                      paddingTop: 8,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      height: 157,
-                    }}
-                  >
-                    <div>
-                      <p
-                        style={{
-                          fontWeight: 600,
-                          fontSize: 16,
-                          color: "#00aaf4",
-                        }}
-                      >
-                        {q.title}
-                      </p>
-                      <div
-                        style={{
-                          overflowY: "hidden",
-                          marginTop: -13,
-                          height: 60,
-                        }}
-                      >
-                        <p
-                          style={{
-                            fontWeight: 500,
-                            fontSize: 12,
-                            color: "#2c3854",
-                            overflowY: "hidden",
-                          }}
-                        >
-                          {q.description}
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          fontWeight: 600,
-                          fontSize: 16,
-                          color: "#00aaf4",
-                          marginTop: -15,
-                        }}
-                      >
-                        <p>{q.bonus_price}</p>
-                      </div>
-                    </div>
-                    <div>
-                      <div>
-                        <Button
-                          fluid
-                          content={"Приобрести"}
-                          style={{
-                            backgroundColor: "#00aaf4",
-                            borderRadius: 8,
-                            color: "#ffffff",
-                            fontWeight: 600,
-                            fontSize: 16,
-                            marginBottom: 10,
-                          }}
-                          onClick={() => {
-                            apiPost(purchasesApi, { product: q.id })
-                              .onStatus(
-                                (res) => {
-                                  if (res.status === 403) {
-                                    NotificationManager.error("Error message", res.data.detail, 1000)
-                                  }
-                                  console.log(res)
-                                },
-                                200,
-                                201,
-                                203,
-                                204,
-                                400,
-                                401,
-                                403,
-                              )
-                              .onFail(() => {})
-                              .afterAll(() => {})
-                              .startSingle()
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            ))}
+          <div className={styles.sort}>
+            <a onClick={()=>sort("new")} style={activeSort === "new" ? {color:"black"} : {}}>Сначала новые</a>
+            <a onClick={()=>sort("cheap")} style={activeSort === "cheap" ? {color:"black"} : {}}>Сначала дешевые</a>
+            <a onClick={()=>sort("expensive")} style={activeSort === "expensive" ? {color:"black"} : {}}>Сначала дорогие</a>
           </div>
+        </div>
+        <div className={styles.info}>
+          <div className={styles.text}>
+            <h2>Магазин подарков -</h2>
+            <p>это то место, где ты сможешь купить вещи и многое другое за <span>Терабаксы</span>, которые получил за
+              успешное прохождение курсов</p>
+            <p><span>Терабаксы</span> можно получить как бонусы за хорошую успеваемость и активность на уроке. И так
+              далее и тому подобное</p>
+          </div>
+          <img src={info} alt="info" />
+
+        </div>
+        <div className={styles.giftsContainer}>
+          {gifts.map((gift, i) => (
+            <div className={styles.gift} key={i}>
+              <img src={gift.image} alt={gift.title} />
+              <h3>{gift.title}</h3>
+              <p>{gift.description}</p>
+              <span>{gift.bonus_price} терабаксов</span>
+              <button
+                onClick={() => {
+                  apiPost(purchasesApi, { product: gift.id })
+                    .onStatus(
+                      (res) => {
+                        if (res.status === 403) {
+                          NotificationManager.error("Error message", res.data.detail, 1000)
+                        }
+                        console.log(res)
+                      },
+                      200,
+                      201,
+                      203,
+                      204,
+                      400,
+                      401,
+                      403,
+                    )
+                    .onFail(() => {
+                    })
+                    .afterAll(() => {
+                    })
+                    .startSingle()
+                }}
+              >Купить
+              </button>
+            </div>
+          ))}
+
         </div>
       </div>
     </>

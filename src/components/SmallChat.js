@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { getDialogues } from "../ducks/dialogues"
-import { Input, Icon } from "semantic-ui-react"
+import { Icon, Input } from "semantic-ui-react"
 import { dialoguesApi } from "../config/apiUrls"
 import { apiGet, apiPost } from "../utils/apiConnector"
 import $ from "jquery"
-import { transAvatarUrl } from "../utils/logical"
+import styles from "./styles/SmallChat.module.css"
 
 const SmallChat = (props) => {
   const [visible, setVisible] = useState(false)
@@ -44,71 +44,28 @@ const SmallChat = (props) => {
         setMessages(msgs.map((q) => q))
         $("#messages").scrollTop($("#messages")[0].scrollHeight)
       }, 200)
-      .onFail(() => {})
-      .afterAll(() => {})
+      .onFail(() => {
+      })
+      .afterAll(() => {
+      })
       .startSingle()
   }
   useEffect(() => {
     onGetDialogues()
-    return () => {}
+    return () => {
+    }
   }, [])
   const chatRender = () => {
     return (
       <>
-        <div
-          style={{
-            position: "fixed",
-            bottom: 70,
-            right: 301,
-            width: 300,
-            backgroundColor: "white",
-            border: "0px solid red",
-            borderRadius: 5,
-            zIndex: 100,
-            boxShadow: "0 0 5px #cccccc",
-            transition: "0.1s",
-            height: 326,
-            borderTopLeftRadius: 16,
-          }}
-        >
-          <div
-            style={{
-              height: 56,
-              width: 300,
-              backgroundColor: "#ccdeff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderTopLeftRadius: 16,
-              fontWeight: 600,
-              fontSize: 16,
-              color: "#00aaf4",
-            }}
-          >
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "#c2cecf",
-                marginRight: 10,
-              }}
-            >
-              {dialog.chat_participant.user.avatar ? (
-                <>
-                  <img
-                    src={transAvatarUrl(dialog.chat_participant.user.avatar)}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: 20,
-                      backgroundColor: "aliceblue",
-                    }}
-                  />
-                </>
-              ) : (
-                <></>
-              )}
+        <div className={styles.chatContainer}>
+          <div className={styles.head}>
+            <div className={styles.icon}>
+              {/*{dialog.chat_participant.user.avatar ? (*/}
+              {/*  <img src={transAvatarUrl(dialog.chat_participant.user.avatar)} />*/}
+              {/*) : (*/}
+              <img src={"https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"} />
+              {/*)}*/}
             </div>
             {dialog.chat_participant.user.first_name !== "not_given" &&
             dialog.chat_participant.user.first_name !== "not_giiven"
@@ -119,34 +76,28 @@ const SmallChat = (props) => {
               ? dialog.chat_participant.user.last_name
               : ""}
           </div>
-          <div
-            id="messages"
-            style={{ width: 300, height: 220, overflowY: "scroll" }}
-          >
+          <div id="messages" style={{ width: 300, height: 220, overflowY: "scroll" }}>
             {messages.map((q) => (
               <>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent:
-                      q.from_user.email === profile.email
-                        ? "flex-end"
-                        : "flex-start",
-                  }}
-                >
+                <div style={{
+                  display: "flex",
+                  overflowX: "hidden",
+                  justifyContent:
+                    q.from_user.email === profile.email
+                      ? "flex-end"
+                      : "flex-start",
+                }}>
                   <div
                     style={{
-                      maxHeight: 100,
-                      color: "#005cff",
+                      color: "black",
                       position: "relative",
-                      cursor: "pointer",
                       width: 185,
-                      boxShadow: " 0 0 4px #aaaaaa",
+                      backgroundColor: q.from_user.email === profile.email ? "#F5F6F8" : "white",
+                      border: q.from_user.email === profile.email ? "none" : "1px solid #C2CFE0",
                       margin: 10,
-                      border: "0px solid red",
                       borderRadius: 15,
-                      marginLeft: 10,
-                      marginRight: 10,
+                      padding: 10,
+                      wordWrap: "break-word",
                     }}
                   >
                     <div
@@ -197,8 +148,10 @@ const SmallChat = (props) => {
                 apiPost(dialoguesApi + dialog.id + "/messages/", {
                   text,
                 })
-                  .onStatus((res) => {}, 200, 201, 203, 204)
-                  .onFail(() => {})
+                  .onStatus((res) => {
+                  }, 200, 201, 203, 204)
+                  .onFail(() => {
+                  })
                   .afterAll(() => {
                     $("#messages").scrollTop($("#messages")[0].scrollHeight)
                     setText("")
@@ -211,25 +164,12 @@ const SmallChat = (props) => {
       </>
     )
   }
+  console.log("dialogues.data.")
+  console.log(dialogues.data)
   const dialogsRender = () => {
     return (
       <>
-        <div
-          style={{
-            position: "fixed",
-            bottom: 70,
-            right: 60,
-            width: 240,
-            backgroundColor: "white",
-            border: "0px solid red",
-            borderRadius: 5,
-            zIndex: 100,
-            boxShadow: "0 0 5px #cccccc",
-            transition: "0.1s",
-            height: 326,
-            borderTopRightRadius: 16,
-          }}
-        >
+        <div className={styles.dialogueContainer}>
           <div
             style={{
               height: 56,
@@ -257,35 +197,20 @@ const SmallChat = (props) => {
             return (
               <>
                 <div
-                  style={{
-                    width: 240,
-                    height: 44,
-                    boxShadow: "0 0 1px #cccccc",
-                    color: "#005cff",
-                    position: "relative",
-                    zIndex: 101,
-                    cursor: "pointer",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: 16,
-                    fontWeight: 600,
-                    color: "#2c3854",
-                  }}
+                  className={styles.dialogueUser}
+                  style={{ backgroundColor: (chatOpened && q.id === dialog.id) ? "#ccdeff" : "#ffffff", }}
                   onClick={(e) => {
-                    console.log(q)
                     if (q.id === dialog.id) {
                       setDialog({})
                       setChatOpened(false)
-                      e.target.style.backgroundColor = "#ffffff"
                     } else {
                       setChatOpened(true)
                       setDialog(q)
                       getMessages(q.id)
-                      e.target.style.backgroundColor = "#ccdeff"
                     }
                   }}
                 >
+                  <img src={"https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"} />
                   {q.chat_participant.user.first_name !== "not_given" &&
                   q.chat_participant.user.first_name !== "not_giiven"
                     ? q.chat_participant.user.first_name
@@ -314,7 +239,7 @@ const SmallChat = (props) => {
         onClick={() => {
           setVisible(false)
         }}
-      ></div>
+      />
     </>
   )
   return (

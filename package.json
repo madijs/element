@@ -34,6 +34,7 @@
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.2.2",
     "react-i18next": "^11.7.2",
+    "react-modal": "^3.12.1",
     "react-notifications": "^1.7.2",
     "react-notifications-component": "^3.0.3",
     "react-pdf": "^5.0.0",
